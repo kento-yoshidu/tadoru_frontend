@@ -25,23 +25,25 @@
   display: grid;
   grid-template-columns: 1fr 1fr;
   gap: var(--row-gap) var(--col-gap);
+  align-self: center;
+  width: min(1280px, 100vw - 40px);
 }
 
 .branch {
   position: relative;
   border-left: 2px dashed var(--chalk-dim);
   padding-left: 16px;
-}
 
-.branch::before {
-  content: "";
-  position: absolute;
-  top: calc(var(--row-gap) / -2);
-  left: calc(-50% - var(--col-gap) - 3px);
-  width: calc(50% + var(--col-gap) + 3px);
-  height: calc(var(--row-gap) / 2);
-  border-top: 2px dashed var(--line-color);
-  border-right: 2px dashed var(--line-color);
+  &::before {
+    content: "";
+    position: absolute;
+    top: calc(var(--row-gap) / -2);
+    left: calc(-50% - var(--col-gap) - 3px);
+    width: calc(50% + var(--col-gap) + 3px);
+    height: calc(var(--row-gap) / 2);
+    border-top: 2px dashed var(--line-color);
+    border-right: 2px dashed var(--line-color);
+  }
 }
 
 .branchLabel {

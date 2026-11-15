@@ -28,16 +28,12 @@ function RouteComponent() {
   const { data } = useSuspenseQuery(unitsQueryOptions);
 
   return (
-    <>
-      <section id="center">
-        {data.map((d) => (
-          <>
-            <Link to="/units/$unitId" params={{ unitId: d.id }}>
-              <p>{d.title}</p>
-            </Link>
-          </>
-        ))}
-      </section>
-    </>
+    <section id="center">
+      {data.map((d) => (
+        <Link to="/units/$unitId" params={{ unitId: d.id }}>
+          <p>{d.title}</p>
+        </Link>
+      ))}
+    </section>
   );
 }
