@@ -98,6 +98,7 @@ function RouteComponent() {
 
   const renderQuestion = (q: Question, parentId?: string) => (
     <section key={q.id} className={styles.card}>
+      <p>問題ID:{q.id}</p>
       <h2>{q.body}</h2>
 
       <div className={styles.choices}>
@@ -132,14 +133,9 @@ function RouteComponent() {
       return null;
     }
 
-    const last = list[list.length - 1];
-    const ended = results[last.id]?.correct === true;
-
     return (
       <aside className={styles.branch}>
-        <p className={styles.branchLabel}>補足</p>
         {list.map((q) => renderQuestion(q, parentId))}
-        {ended && <p className={styles.branchLabel}>補足おわり</p>}
       </aside>
     );
   };
