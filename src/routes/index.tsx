@@ -1,6 +1,6 @@
-import { createFileRoute, Link } from '@tanstack/react-router'
+import { createFileRoute, Link } from "@tanstack/react-router";
 import { queryOptions, useSuspenseQuery } from "@tanstack/react-query";
-import { fetchClient } from '../lib/fetchClient';
+import { fetchClient } from "../lib/fetchClient";
 
 type Unit = {
   id: string;
@@ -13,7 +13,7 @@ const unitsQueryOptions = queryOptions({
   queryFn: () => fetchClient<Unit[]>("/api/units"),
 });
 
-export const Route = createFileRoute('/')({
+export const Route = createFileRoute("/")({
   loader: ({ context }) => context.queryClient.ensureQueryData(unitsQueryOptions),
   pendingComponent: () => (
     <>
@@ -22,7 +22,7 @@ export const Route = createFileRoute('/')({
     </>
   ),
   component: RouteComponent,
-})
+});
 
 function RouteComponent() {
   const { data } = useSuspenseQuery(unitsQueryOptions);
