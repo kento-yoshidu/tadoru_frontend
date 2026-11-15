@@ -1,8 +1,8 @@
-import { queryOptions, useMutation, useSuspenseQuery } from '@tanstack/react-query';
-import { createFileRoute } from '@tanstack/react-router'
-import { fetchClient } from '../../lib/fetchClient';
+import { Fragment, useState } from "react";
+import { queryOptions, useMutation, useSuspenseQuery } from "@tanstack/react-query";
+import { createFileRoute } from "@tanstack/react-router";
+import { fetchClient } from "../../lib/fetchClient";
 import styles from "./-unitId.module.css";
-import { Fragment, useState } from 'react';
 
 type Choice = {
   id: string;
@@ -31,7 +31,7 @@ type AnswerResult = {
 
 type AnswerVars = { questionId: string; choiceId: string; parentId?: string }; // 補足の問題なら parentId を付ける
 
-export const Route = createFileRoute('/units/$unitId')({
+export const Route = createFileRoute("/units/$unitId")({
   loader: ({ context, params }) =>
     context.queryClient.ensureQueryData(startQueryOptions(params.unitId)),
   component: RouteComponent,
@@ -97,7 +97,7 @@ function RouteComponent() {
   });
 
   const renderQuestion = (q: Question, parentId?: string) => (
-    <section key={q.id}>
+    <section key={q.id} className={styles.card}>
       <h2>{q.body}</h2>
 
       <div className={styles.choices}>
@@ -141,8 +141,8 @@ function RouteComponent() {
         {list.map((q) => renderQuestion(q, parentId))}
         {ended && <p className={styles.branchLabel}>補足おわり</p>}
       </aside>
-    )
-  }
+    );
+  };
   const lastMain = mainQuestions[mainQuestions.length - 1];
   const unitCompleted = results[lastMain.id]?.correct === true;
 
@@ -150,7 +150,7 @@ function RouteComponent() {
     <div className={styles.flow}>
       {mainQuestions.map((q, i) => (
         <Fragment key={q.id}>
-          <div>{renderQuestion(q)}</div>
+          <div className={styles.main}>{renderQuestion(q)}</div>
           <div className={styles.side}>
             {i > 0 && renderBranch(mainQuestions[i - 1].id)}
           </div>
@@ -159,7 +159,7 @@ function RouteComponent() {
 
       {unitCompleted && (
         <>
-          <div><p>完了</p></div>
+          <div className={styles.main}><p>完了</p></div>
           <div className={styles.side}>{renderBranch(lastMain.id)}</div>
         </>
       )}

@@ -18,15 +18,30 @@
 }
 
 .flow {
+  --row-gap: 24px;
+  --col-gap: 32px;
+  --line-color: var(--chalk-dim);
+
   display: grid;
   grid-template-columns: 1fr 1fr;
-  gap: 24px 32px;
-  align-items: start;
+  gap: var(--row-gap) var(--col-gap);
 }
 
 .branch {
+  position: relative;
   border-left: 2px dashed var(--chalk-dim);
   padding-left: 16px;
+}
+
+.branch::before {
+  content: "";
+  position: absolute;
+  top: calc(var(--row-gap) / -2);
+  left: calc(-50% - var(--col-gap) - 3px);
+  width: calc(50% + var(--col-gap) + 3px);
+  height: calc(var(--row-gap) / 2);
+  border-top: 2px dashed var(--line-color);
+  border-right: 2px dashed var(--line-color);
 }
 
 .branchLabel {
@@ -46,3 +61,38 @@
     margin-left: 16px;
   }
 }
+
+.card {
+  border: 1px solid var(--line);
+  border-radius: 12px;
+  padding: 16px;
+}
+
+.main {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+
+  &::after {
+    content: "";
+    flex: 1;
+    align-self: center;
+    border-left: 2px solid var(--line-color);
+  }
+}
+
+/* 最後の本流セルからは下に線を出さない */
+.main:nth-last-child(2)::after {
+  display: none;
+}
+
+/* ② 行と行の間の隙間を通る線 */
+.main:not(:first-child)::before {
+  content: "";
+  position: absolute;
+  bottom: 100%;
+  left: calc(50% - 1px);
+  height: var(--row-gap);
+  border-left: 2px solid var(--line-color);
+}
+
